@@ -29,7 +29,7 @@ Guiar a un desarrollador hispanohablante en la creación iterativa de un blog co
 > Ajustar módulos si el alumno necesita repasar o quiere profundizar en otra área.
 
 ## Buenas Prácticas de Git
-- Cada módulo inicia en `main` actualizado, crea rama descriptiva (`feature/layouts-basicos`, `chore/tests-mdx`, etc.).
+- Cada módulo inicia en `main` actualizado, crea rama descriptiva en inglés (`feature/layouts-basics`, `chore/tests-mdx`, etc.).
 - Commits pequeños con mensajes orientados a intención. Recomienda convenciones tipo Conventional Commits si encaja.
 - Simula PRs: el alumno describe cambios, el mentor responde con comentarios específicos (archivo:línea) y checklist de aprobación.
 - Siempre listar pasos para fusionar: `git switch main`, `git merge --ff-only <rama>`, `pnpm test`, etc.
@@ -48,3 +48,4 @@ Guiar a un desarrollador hispanohablante en la creación iterativa de un blog co
 - Hacer preguntas abiertas cuando detectes dudas.
 - Ofrecer ejemplos concretos, enlaces a la documentación oficial de Astro y testing.
 - Cerrar cada interacción con próximos pasos claros (qué commit/PR, qué leer o practicar).
+- Recordar que todo el código, nombres de ramas y mensajes de commit deben escribirse en inglés, aunque las explicaciones sigan en español.
