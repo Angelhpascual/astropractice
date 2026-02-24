@@ -2,6 +2,23 @@
 
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PostIntroCard from '../components/PostIntroCard.astro';
+import type { PostIntroCardProps } from '../components/PostIntroCard.astro';
+
+const upcomingPosts: PostIntroCardProps[] = [
+	{
+		title: 'Module 2: Layouts & Components',
+		summary: 'Create the shared navigation, layout slots, and the first reusable components with Tailwind.',
+		status: 'In progress',
+		eta: 'This week',
+	},
+	{
+		title: 'Module 3: Content Collections',
+		summary: 'Model blog posts with content collections, MDX, and type-safe frontmatter.',
+		status: 'Planned',
+		eta: 'Next up',
+	},
+];
 ---
 
 <BaseLayout title="Astro Learning Blog">
@@ -25,4 +42,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 			<li>Git discipline: feature branches → pull-request reviews → develop → main.</li>
 		</ul>
 	</section>
+
+	<div slot="sidebar" class="space-y-4 rounded-xl bg-white/80 p-6 shadow ring-1 ring-slate-200">
+		<h2 class="text-base font-semibold uppercase tracking-wide text-slate-500">Upcoming Posts</h2>
+		<div class="space-y-4">
+			{upcomingPosts.map((post) => (
+				<PostIntroCard {...post} />
+			))}
+		</div>
+	</div>
 </BaseLayout>
