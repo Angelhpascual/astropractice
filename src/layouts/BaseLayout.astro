@@ -1,7 +1,18 @@
 ---
 import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
 
-const { title = 'Astro Learning Blog', description = 'Building a blog to master Astro concepts step by step.' } = Astro.props;
+const {
+	title = 'Astro Learning Blog',
+	description = 'Building a blog to master Astro concepts step by step.',
+	headerTitle = 'Astro Learning Blog',
+	headerTagline = 'Learning Astro one deliberate module at a time.',
+	navLinks = [
+		{ href: '/', label: 'Home' },
+		{ href: '/roadmap', label: 'Roadmap' },
+		{ href: '/notes', label: 'Notes' },
+	],
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -16,13 +27,21 @@ const { title = 'Astro Learning Blog', description = 'Building a blog to master 
 		<title>{title}</title>
 	</head>
 	<body class="min-h-screen bg-slate-50 text-slate-950 font-sans antialiased">
-		<main class="mx-auto flex min-h-screen w-full max-w-4xl flex-col px-6 py-12 lg:px-10">
-			<header class="mb-12">
-				<slot name="hero" />
-			</header>
-			<div class="prose prose-slate max-w-none">
-				<slot />
-			</div>
-		</main>
+		<div class="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-6 py-10 lg:px-12">
+			<SiteHeader title={headerTitle} tagline={headerTagline} navLinks={navLinks} />
+			<main class="flex flex-1 flex-col gap-10 lg:flex-row">
+				<section class="flex-1 space-y-8">
+					<header>
+						<slot name="hero" />
+					</header>
+					<div class="prose prose-slate max-w-none">
+						<slot />
+					</div>
+				</section>
+				<aside class="lg:w-80">
+					<slot name="sidebar" />
+				</aside>
+			</main>
+		</div>
 	</body>
 </html>

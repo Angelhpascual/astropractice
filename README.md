@@ -53,3 +53,10 @@ This repo documents a slow-paced learning journey guided by an Astro mentor agen
 5. **Merge** – integrate into `develop`, then fast-forward `main` only after tests pass. Release `main` as the deployable branch.
 
 The project emphasizes deliberate use of AI: prompts capture requirements, generated code is reviewed critically, and testing practices are introduced progressively (Vitest, Playwright, etc.).
+
+## 🧩 Components & IA (Module 2)
+
+- Cada layout o componente reutilizable vive en `src/layouts` o `src/components` y se escribe en inglés.
+- Antes de pedir ayuda a la IA para UI, define props esperadas, reglas de accesibilidad y límites de Tailwind; luego revisa que el markup final respete esos criterios.
+- Las solicitudes a la IA deben incluir: qué slot ocupa el componente (`hero`, `sidebar`, etc.), qué datos recibe y cómo se valida (`pnpm dev`, `pnpm build`).
+- Toda respuesta de IA se revisa como un PR: semántica, responsive, naming de clases y consistencia con el diseño modular del blog.
