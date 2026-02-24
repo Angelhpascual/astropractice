@@ -1,0 +1,77 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+
+type ModuleEntry = CollectionEntry<"modules">
+
+export async function getStaticPaths() {
+  const modules = await getCollection("modules")
+  return modules.map((module) => ({
+    params: { slug: module.slug },
+    props: { module },
+  }))
+}
+
+const { module } = Astro.props as { module: ModuleEntry }
+const { Content } = await module.render()
+const statusLabel =
+  module.data.status === "complete"
+    ? "Complete"
+    : module.data.status === "in-progress"
+      ? "In progress"
+      : "Planned"
+---
+
+<BaseLayout
+  title={`${module.data.title} · Astro Learning Blog`}
+  headerTitle={module.data.title}
+  headerTagline={`Module ${module.data.moduleNumber}`}
+>
+  <div slot="hero" class="space-y-3 rounded-xl bg-white/80 p-8 shadow ring-1 ring-slate-200">
+    <p class="text-sm font-semibold uppercase tracking-wide text-indigo-500">
+      Module {module.data.moduleNumber}
+    </p>
+    <h1 class="text-3xl font-bold text-slate-900">{module.data.title}</h1>
+    <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+      <span class="rounded-full bg-slate-100 px-3 py-1 font-semibold text-slate-700">
+        {statusLabel}
+      </span>
+      <span>
+        Published{" "}
+        {module.data.publishedAt.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })}
+      </span>
+      {module.data.readingTimeMinutes && (
+        <span>{module.data.readingTimeMinutes} min read</span>
+      )}
+    </div>
+  </div>
+
+  <section class="prose prose-slate max-w-none rounded-xl bg-white/90 p-8 shadow ring-1 ring-slate-200">
+    <Content content={module} />
+  </section>
+
+  <div slot="sidebar" class="space-y-4 rounded-xl bg-white p-6 shadow ring-1 ring-slate-200">
+    <h2 class="text-base font-semibold uppercase tracking-wide text-slate-500">Resources</h2>
+    <ul id="resource-list" class="space-y-3 text-sm text-slate-600"></ul>
+    <script type="module">
+      const list = document.getElementById("resource-list")
+      fetch("/api/resources.json")
+        .then((res) => res.json())
+        .then(({ resources }) => {
+          list.innerHTML = ""
+          resources.forEach((item) => {
+            const li = document.createElement("li")
+            li.innerHTML = `<span class="font-semibold text-slate-900">${item.category}</span> · <a class="text-indigo-600 underline" href="${item.url}" target="_blank" rel="noreferrer">${item.title}</a>`
+            list.appendChild(li)
+          })
+        })
+        .catch(() => {
+          list.innerHTML = "<li>Unable to load resources.</li>"
+        })
+    </script>
+  </div>
+</BaseLayout>
