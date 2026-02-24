@@ -1,24 +1,20 @@
 
 
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostIntroCard from '../components/PostIntroCard.astro';
 import type { PostIntroCardProps } from '../components/PostIntroCard.astro';
 
-const upcomingPosts: PostIntroCardProps[] = [
-	{
-		title: 'Module 2: Layouts & Components',
-		summary: 'Create the shared navigation, layout slots, and the first reusable components with Tailwind.',
-		status: 'In progress',
-		eta: 'This week',
-	},
-	{
-		title: 'Module 3: Content Collections',
-		summary: 'Model blog posts with content collections, MDX, and type-safe frontmatter.',
-		status: 'Planned',
-		eta: 'Next up',
-	},
-];
+const modules = await getCollection('modules', ({ data }) => data.status !== 'complete');
+const upcomingPosts: PostIntroCardProps[] = modules
+	.sort((a, b) => a.data.moduleNumber - b.data.moduleNumber)
+	.map(({ data }) => ({
+		title: data.title,
+		summary: data.summary,
+		status: data.status === 'in-progress' ? 'In progress' : 'Planned',
+		eta: data.status === 'in-progress' ? 'This week' : 'Soon',
+	}));
 ---
 
 <BaseLayout title="Astro Learning Blog">

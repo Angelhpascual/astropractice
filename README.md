@@ -56,6 +56,12 @@ The project emphasizes deliberate use of AI: prompts capture requirements, gener
 
 ## 🧩 Components & IA (Module 2)
 
+## 📝 Content Collections & Testing (Module 3)
+
+- Usa `src/content/config.ts` para definir colecciones con `defineCollection` + Zod. Cada módulo vive en `src/content/modules/<slug>.md`.
+- Cuando la IA ayude a generar plantillas Markdown/MDX, valida que respete el esquema (campos obligatorios, enums, fechas).
+- Usa `getCollection('modules')` para consumir el contenido y ordenarlo por `moduleNumber`; renderiza secciones como `/modules` o el sidebar desde los mismos datos.
+- Añade pruebas con Vitest para validar el esquema o datos simulados (`pnpm test`). Si necesitas validación extra, instala `@astrojs/check` y ejecuta `pnpm astro check` antes de abrir un PR.
 - Cada layout o componente reutilizable vive en `src/layouts` o `src/components` y se escribe en inglés.
 - Antes de pedir ayuda a la IA para UI, define props esperadas, reglas de accesibilidad y límites de Tailwind; luego revisa que el markup final respete esos criterios.
 - Las solicitudes a la IA deben incluir: qué slot ocupa el componente (`hero`, `sidebar`, etc.), qué datos recibe y cómo se valida (`pnpm dev`, `pnpm build`).
