@@ -25,4 +25,15 @@ describe('module schema', () => {
 
 		expect(() => moduleSchema.parse(payload)).toThrow();
 	});
+
+	it('requires summary', () => {
+		expect(() =>
+			moduleSchema.parse({
+				title: 'Summaryless module',
+				moduleNumber: 4,
+				status: 'planned',
+				publishedAt: new Date(),
+			}),
+		).toThrow();
+	});
 });
