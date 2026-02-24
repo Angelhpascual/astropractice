@@ -1,50 +1,76 @@
-
-
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PostIntroCard from '../components/PostIntroCard.astro';
-import type { PostIntroCardProps } from '../components/PostIntroCard.astro';
+import { getCollection, type CollectionEntry } from "astro:content"
+import BaseLayout from "../layouts/BaseLayout.astro"
+import PostIntroCard, {
+  type PostIntroCardProps,
+} from "../components/PostIntroCard.astro"
 
-const modules = await getCollection('modules', ({ data }) => data.status !== 'complete');
-const upcomingPosts: PostIntroCardProps[] = modules
-	.sort((a, b) => a.data.moduleNumber - b.data.moduleNumber)
-	.map(({ data }) => ({
-		title: data.title,
-		summary: data.summary,
-		status: data.status === 'in-progress' ? 'In progress' : 'Planned',
-		eta: data.status === 'in-progress' ? 'This week' : 'Soon',
-	}));
+const modules = await getCollection("modules")
+const upcomingModules: CollectionEntry<"modules">[] = modules.filter(
+  (entry): entry is CollectionEntry<"modules"> => entry.data.status !== "complete",
+)
+const upcomingPosts: PostIntroCardProps[] = upcomingModules
+  .slice()
+  .sort((a, b) => a.data.moduleNumber - b.data.moduleNumber)
+  .map(({ data }) => ({
+    title: data.title,
+    summary: data.summary,
+    status: data.status === "in-progress" ? "In progress" : "Planned",
+    eta: data.status === "in-progress" ? "This week" : "Soon",
+  }))
 ---
 
 <BaseLayout title="Astro Learning Blog">
-	<div slot="hero" class="space-y-4 rounded-xl bg-white/80 p-8 shadow-sm ring-1 ring-slate-200">
-		<p class="text-sm font-semibold uppercase tracking-wide text-indigo-500">Module 1 · Foundations</p>
-		<h1 class="text-3xl font-bold text-slate-900 sm:text-4xl">Learning Astro by Building a Blog</h1>
-		<p class="max-w-2xl text-lg text-slate-600">
-			This project documents each step of my Astro journey: deliberate practice, thoughtful use of AI, and strong Git hygiene.
-		</p>
-	</div>
+  <div
+    slot="hero"
+    class="space-y-4 rounded-xl bg-white/80 p-8 shadow-sm ring-1 ring-slate-200"
+  >
+    <p class="text-sm font-semibold uppercase tracking-wide text-indigo-500">
+      Module 1 · Foundations
+    </p>
+    <h1 class="text-3xl font-bold text-slate-900 sm:text-4xl">
+      Learning Astro by Building a Blog
+    </h1>
+    <p class="max-w-2xl text-lg text-slate-600">
+      This project documents each step of my Astro journey: deliberate practice,
+      thoughtful use of AI, and strong Git hygiene.
+    </p>
+  </div>
 
-	<section class="space-y-4 rounded-xl bg-white/70 p-8 shadow-sm ring-1 ring-slate-200">
-		<h2 class="text-2xl font-semibold text-slate-900">What to Expect</h2>
-		<p class="text-slate-600">
-			The blog will grow module by module, covering layouts, content collections, routing, interactivity, testing, performance, and deployment.
-			Each entry will summarize the goals, decisions, and lessons learned per module.
-		</p>
-		<ul class="list-disc space-y-2 pl-5 text-slate-600">
-			<li>Intentional pace focused on understanding both the “what” and the “why”.</li>
-			<li>Hands-on practice using AI as a code reviewer and assistant, not an autopilot.</li>
-			<li>Git discipline: feature branches → pull-request reviews → develop → main.</li>
-		</ul>
-	</section>
+  <section
+    class="space-y-4 rounded-xl bg-white/70 p-8 shadow-sm ring-1 ring-slate-200"
+  >
+    <h2 class="text-2xl font-semibold text-slate-900">What to Expect</h2>
+    <p class="text-slate-600">
+      The blog will grow module by module, covering layouts, content
+      collections, routing, interactivity, testing, performance, and deployment.
+      Each entry will summarize the goals, decisions, and lessons learned per
+      module.
+    </p>
+    <ul class="list-disc space-y-2 pl-5 text-slate-600">
+      <li>
+        Intentional pace focused on understanding both the “what” and the “why”.
+      </li>
+      <li>
+        Hands-on practice using AI as a code reviewer and assistant, not an
+        autopilot.
+      </li>
+      <li>
+        Git discipline: feature branches → pull-request reviews → develop →
+        main.
+      </li>
+    </ul>
+  </section>
 
-	<div slot="sidebar" class="space-y-4 rounded-xl bg-white/80 p-6 shadow ring-1 ring-slate-200">
-		<h2 class="text-base font-semibold uppercase tracking-wide text-slate-500">Upcoming Posts</h2>
-		<div class="space-y-4">
-			{upcomingPosts.map((post) => (
-				<PostIntroCard {...post} />
-			))}
-		</div>
-	</div>
+  <div
+    slot="sidebar"
+    class="space-y-4 rounded-xl bg-white/80 p-6 shadow ring-1 ring-slate-200"
+  >
+    <h2 class="text-base font-semibold uppercase tracking-wide text-slate-500">
+      Upcoming Posts
+    </h2>
+    <div class="space-y-4">
+      {upcomingPosts.map((post) => <PostIntroCard {...post} />)}
+    </div>
+  </div>
 </BaseLayout>
