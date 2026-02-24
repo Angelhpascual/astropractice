@@ -41,3 +41,15 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## 🧠 Learning Workflow
+
+This repo documents a slow-paced learning journey guided by an Astro mentor agent. Every module follows the same routine:
+
+1. **Plan** – clarify goals, constraints, and acceptance criteria. Define how AI will support the task.
+2. **Branch** – start from `develop` and create a feature branch named in English (`feature/module-1-foundations`, etc.).
+3. **Build** – implement el módulo con Astro y Tailwind (v4) manteniendo código/comentarios en inglés. Valida con `pnpm dev`, `pnpm build` y, más adelante, pruebas automatizadas.
+4. **Review** – treat changes like a pull request: describe decisions, request feedback from the mentor, and adjust as needed.
+5. **Merge** – integrate into `develop`, then fast-forward `main` only after tests pass. Release `main` as the deployable branch.
+
+The project emphasizes deliberate use of AI: prompts capture requirements, generated code is reviewed critically, and testing practices are introduced progressively (Vitest, Playwright, etc.).

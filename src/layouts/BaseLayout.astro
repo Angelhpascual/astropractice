@@ -1,0 +1,28 @@
+---
+import '../styles/global.css';
+
+const { title = 'Astro Learning Blog', description = 'Building a blog to master Astro concepts step by step.' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<title>{title}</title>
+	</head>
+	<body class="min-h-screen bg-slate-50 text-slate-950 font-sans antialiased">
+		<main class="mx-auto flex min-h-screen w-full max-w-4xl flex-col px-6 py-12 lg:px-10">
+			<header class="mb-12">
+				<slot name="hero" />
+			</header>
+			<div class="prose prose-slate max-w-none">
+				<slot />
+			</div>
+		</main>
+	</body>
+</html>
